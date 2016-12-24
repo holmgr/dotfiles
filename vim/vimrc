@@ -16,6 +16,12 @@ Plugin 'dracula/vim'
 " YouCompleteMe
 Plugin 'Valloric/YouCompleteMe'
 
+" Vim snippets engine combined with YCM
+Plugin 'SirVer/ultisnips'
+
+" Snippets are separated from the engine
+Plugin 'honza/vim-snippets'
+
 " Git integration
 Plugin 'tpope/vim-fugitive'
 
@@ -139,3 +145,8 @@ set laststatus=2
 
 " Set airline theme 
 let g:airline_theme='term'
+
+" Snippets trigger configuration
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
