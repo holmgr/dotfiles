@@ -1,21 +1,69 @@
+"""""""""""""""""""""""""""""
+"   Vundle
+"""""""""""""""""""""""""""""
+set nocompatible 
+filetype off
 
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" Vundle
+Plugin 'VundleVim/Vundle.vim'
+
+" Dracula theme
+Plugin 'dracula/vim'
+
+" YouCompleteMe
+Plugin 'Valloric/YouCompleteMe'
+
+" Git integration
+Plugin 'tpope/vim-fugitive'
+
+" Rust syntax highlighting
+Plugin 'rust-lang/rust.vim' 
+
+" Github flavored markdown
+Plugin 'git@github.com:jtratner/vim-flavored-markdown.git'
+
+" CtrlP: Fuzzy finder
+Plugin 'https://github.com/ctrlpvim/ctrlp.vim'
+
+" Use editorconfig files 
+Plugin 'editorconfig/editorconfig-vim'
+
+" Airline and themes 
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+" Gitgutter 
+Plugin 'airblade/vim-gitgutter'
+
+" Language packs
+Plugin 'sheerun/vim-polyglot'
+
+call vundle#end()
 
 """""""""""""""""""""""""""""
 "   Colors
 """""""""""""""""""""""""""""
 syntax enable               " enable syntax processing
+color dracula               " theme used 
 
 """""""""""""""""""""""""""""
 "   Spaces and tabs
 """""""""""""""""""""""""""""
 set tabstop=4               " number of visual spaces per TAB
 set softtabstop=4           " number of spaces in tab when editing
+set shiftwidth=4            " number of spaces for autoindent
+set autoindent              " copy indent for current line
 set expandtab               " tabs are spaces
 
 """""""""""""""""""""""""""""
 "   UI Config
 """""""""""""""""""""""""""""
 set number                  " show line numbers
+set relativenumber          " use relative line numbers
+set ruler                   " show line and column number
 set showcmd                 " show command in bottom bar
 set cursorline              " highlight current line
 set colorcolumn=80          " 80 char column
@@ -28,6 +76,9 @@ set showmatch               " highlight matching [{()}]
 """""""""""""""""""""""""""""
 set incsearch               " search as characters are entered
 set hlsearch                " highlight matches
+
+" Esc ends search
+nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
 
 """""""""""""""""""""""""""""
 "   Folding
@@ -69,3 +120,22 @@ nnoremap <Leader><Leader> :e#<CR>
 "   Editing
 """""""""""""""""""""""""""""
 set backspace=2             " make backspace behave as in other apps
+
+
+"""""""""""""""""""""""""""""
+"   Plugin config
+
+"""""""""""""""""""""""""""""
+
+" CtrlP settings (keybinding, ordering 
+let g:ctrlp_map = '<Leader>f'
+let g:ctrlp_match_window = 'bottom,order:ttb'
+
+" Always show git gutter
+let g:gitgutter_sign_column_always=1
+
+" Always show airline 
+set laststatus=2
+
+" Set airline theme 
+let g:airline_theme='term'
