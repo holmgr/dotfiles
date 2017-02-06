@@ -22,6 +22,9 @@ Plugin 'SirVer/ultisnips'
 " Snippets are separated from the engine
 Plugin 'honza/vim-snippets'
 
+" Distraction free writing
+Plugin 'junegunn/goyo.vim'
+
 " Git integration
 Plugin 'tpope/vim-fugitive'
 
@@ -160,3 +163,6 @@ noremap <Leader>gs :Gstatus<CR>
 noremap <Leader>gb :Gblame<CR>
 noremap <Leader>gd :Gvdiff<CR>
 noremap <Leader>gr :Gremove<CR>
+
+" Goyo
+let g:goyo_height= '100%'
