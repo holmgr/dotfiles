@@ -4,6 +4,7 @@
 set nocompatible 
 filetype off
 
+set shell=/usr/bin/zsh
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -49,6 +50,10 @@ Plugin 'airblade/vim-gitgutter'
 
 " Language packs
 Plugin 'sheerun/vim-polyglot'
+
+" Javascript and React
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
 
 call vundle#end()
 
