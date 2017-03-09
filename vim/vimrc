@@ -14,6 +14,8 @@ Plugin 'VundleVim/Vundle.vim'
 " Dracula theme
 Plugin 'dracula/vim'
 
+Plugin 'NLKNguyen/papercolor-theme'
+
 " YouCompleteMe
 Plugin 'Valloric/YouCompleteMe'
 
@@ -61,7 +63,14 @@ call vundle#end()
 "   Colors
 """""""""""""""""""""""""""""
 syntax enable               " enable syntax processing
-color dracula               " theme used 
+"color dracula               " theme used 
+let base16colorspace=256  " Access colors present in 256 colorspace
+
+set t_Co=256   " This is may or may not needed.
+
+set background=light
+colorscheme PaperColor
+
 
 """""""""""""""""""""""""""""
 "   Spaces and tabs
@@ -134,16 +143,17 @@ nnoremap <Leader><Leader> :e#<CR>
 "   Editing
 """""""""""""""""""""""""""""
 set backspace=2             " make backspace behave as in other apps
-
+set backupcopy=yes          " force save to disk on save
 
 """""""""""""""""""""""""""""
 "   Plugin config
 
 """""""""""""""""""""""""""""
 
-" CtrlP settings (keybinding, ordering 
+" CtrlP settings (keybinding, ordering, ignore)
 let g:ctrlp_map = '<Leader>f'
 let g:ctrlp_match_window = 'bottom,order:ttb'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
 " Always show git gutter
 let g:gitgutter_sign_column_always=1
@@ -153,6 +163,7 @@ set laststatus=2
 
 " Set airline theme 
 let g:airline_theme='term'
+let g:airline_theme='papercolor'
 
 " Snippets trigger configuration
 let g:UltiSnipsExpandTrigger="<c-j>"
