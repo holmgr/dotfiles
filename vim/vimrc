@@ -63,13 +63,13 @@ call vundle#end()
 "   Colors
 """""""""""""""""""""""""""""
 syntax enable               " enable syntax processing
-"color dracula               " theme used 
+color dracula               " theme used 
 let base16colorspace=256  " Access colors present in 256 colorspace
 
 set t_Co=256   " This is may or may not needed.
 
-set background=light
-colorscheme PaperColor
+"set background=light
+"colorscheme PaperColor
 
 
 """""""""""""""""""""""""""""
