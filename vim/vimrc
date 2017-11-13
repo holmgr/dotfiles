@@ -4,7 +4,7 @@
 set nocompatible 
 filetype off
 
-set shell=/usr/bin/zsh
+set shell=/bin/bash
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -13,8 +13,6 @@ Plugin 'VundleVim/Vundle.vim'
 
 " Dracula theme
 Plugin 'dracula/vim'
-
-Plugin 'NLKNguyen/papercolor-theme'
 
 " YouCompleteMe
 Plugin 'Valloric/YouCompleteMe'
@@ -34,18 +32,17 @@ Plugin 'tpope/vim-fugitive'
 " Rust syntax highlighting
 Plugin 'rust-lang/rust.vim' 
 
-" Github flavored markdown
-Plugin 'git@github.com:jtratner/vim-flavored-markdown.git'
-
-" CtrlP: Fuzzy finder
-Plugin 'https://github.com/ctrlpvim/ctrlp.vim'
-
 " Use editorconfig files 
 Plugin 'editorconfig/editorconfig-vim'
 
-" Airline and themes 
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+" FZF
+Plugin 'junegunn/fzf.vim'
+
+" ALE
+Plugin 'w0rp/ale'
+
+" LightLine and themes 
+Plugin 'itchyny/lightline.vim'
 
 " Gitgutter 
 Plugin 'airblade/vim-gitgutter'
@@ -64,13 +61,9 @@ call vundle#end()
 """""""""""""""""""""""""""""
 syntax enable               " enable syntax processing
 color dracula               " theme used 
-let base16colorspace=256  " Access colors present in 256 colorspace
+let base16colorspace=256    " access colors present in 256 colorspace
 
-set t_Co=256   " This is may or may not needed.
-
-"set background=light
-"colorscheme PaperColor
-
+set t_Co=256                " this is may or may not needed.
 
 """""""""""""""""""""""""""""
 "   Spaces and tabs
@@ -91,6 +84,7 @@ set showcmd                 " show command in bottom bar
 set cursorline              " highlight current line
 set colorcolumn=80          " 80 char column
 filetype indent on          " load filetype-specific indent files
+filetype on
 set lazyredraw              " redraw only when we need to
 set showmatch               " highlight matching [{()}]
 
@@ -150,20 +144,76 @@ set backupcopy=yes          " force save to disk on save
 
 """""""""""""""""""""""""""""
 
-" CtrlP settings (keybinding, ordering, ignore)
-let g:ctrlp_map = '<Leader>f'
-let g:ctrlp_match_window = 'bottom,order:ttb'
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+" FZF
+set rtp+=/usr/local/opt/fzf
+set rtp+=~/fzf
+nmap ; :Buffers<CR>
+nmap <Leader>t :Files<CR>
+nmap <Leader>r :Tags<CR>
+
+" ALE
+let g:ale_sign_column_always = 1
+let g:ale_sign_warning = '▲'
+let g:ale_sign_error = '✗'
+highlight link ALEWarningSign String
+highlight link ALEErrorSign Title
 
 " Always show git gutter
-let g:gitgutter_sign_column_always=1
+set signcolumn=yes
 
-" Always show airline 
+" GitGutter styling to use · instead of +/-
+let g:gitgutter_sign_added = '∙'
+let g:gitgutter_sign_modified = '∙'
+let g:gitgutter_sign_removed = '∙'
+let g:gitgutter_sign_modified_removed = '∙'
+
+" Always show Lightline 
 set laststatus=2
 
-" Set airline theme 
-let g:airline_theme='term'
-let g:airline_theme='papercolor'
+" LightLine 
+let g:lightline = {
+\ 'colorscheme': 'Dracula',
+\ 'active': {
+\   'left': [['mode', 'paste'], ['filename', 'modified']],
+\   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
+\ },
+\ 'component_expand': {
+\   'linter_warnings': 'LightlineLinterWarnings',
+\   'linter_errors': 'LightlineLinterErrors',
+\   'linter_ok': 'LightlineLinterOK'
+\ },
+\ 'component_type': {
+\   'readonly': 'error',
+\   'linter_warnings': 'warning',
+\   'linter_errors': 'error'
+\ },
+\ }
+function! LightlineLinterWarnings() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '' : printf('%d ◆', all_non_errors)
+endfunction
+function! LightlineLinterErrors() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '' : printf('%d ✗', all_errors)
+endfunction
+function! LightlineLinterOK() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '✓ ' : ''
+endfunction
+
+" Update and show lightline but only if it's visible (e.g., not in Goyo)
+autocmd User ALELint call s:MaybeUpdateLightline()
+function! s:MaybeUpdateLightline()
+  if exists('#lightline')
+    call lightline#update()
+  end
+endfunction
 
 " Snippets trigger configuration
 let g:UltiSnipsExpandTrigger="<c-j>"
