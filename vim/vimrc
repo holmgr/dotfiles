@@ -57,6 +57,11 @@ Plugin 'mxw/vim-jsx'
 call vundle#end()
 
 """""""""""""""""""""""""""""
+"   General
+"""""""""""""""""""""""""""""
+set encoding=utf-8
+
+"""""""""""""""""""""""""""""
 "   Colors
 """""""""""""""""""""""""""""
 syntax enable               " enable syntax processing
