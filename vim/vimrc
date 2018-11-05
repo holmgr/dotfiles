@@ -220,6 +220,10 @@ function! s:MaybeUpdateLightline()
   end
 endfunction
 
+
+" YCM goto
+nnoremap <Leader>g :YcmCompleter GoTo<CR>
+
 " Snippets trigger configuration
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
